@@ -2,9 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 
+// ============================ BLADE ========================================
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+Route::view('contact', 'contact');
+Route::view('about', 'about');
+Route::view('login', 'login');
+
+// ============================ ROUTING VIEW ========================================
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Route::view('/', 'welcome');
 // Route::view('contact', 'contact');
