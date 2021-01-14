@@ -2,15 +2,25 @@
 
 use Illuminate\Support\Facades\Route;
 
+// ================= PASSING DATA DARI REQUEST DAN CONTROLLER=================
+// data request dr URL
+// Route::get('/', function () {
+//     $name = request('name');
+//     return view('home', ['name' => $name]);
+// });
+// data request dr controller
+// Route::get('/', 'HomesController@index');
+Route::get('/', 'HomeController');
+
 // ============================ BLADE ========================================
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 Route::view('contact', 'contact');
 Route::view('about', 'about');
 Route::view('login', 'login');
 
-// ============================ ROUTING VIEW ========================================
+// ============================ ROUTING VIEW =================================
 // Route::get('/', function () {
 //     return view('welcome');
 // });
