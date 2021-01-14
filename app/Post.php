@@ -7,4 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     // protected $table = 'post';
+    public function scopeLatestFirst()
+    {
+        return $this->latest()->first();
+    }
+
+    public function scopeLatestPost()
+    {
+        return $this->latest()->get();
+    }
 }
