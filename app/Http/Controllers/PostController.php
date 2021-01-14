@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function show($slug)
+    public function show(Post $post)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
+        // $post = Post::where('slug', $slug)->firstOrFail();
 
         // if (!$post) {
         //     abort(404);

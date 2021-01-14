@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // ============================= ROUTE WILD ==================================
-Route::get('post/{slug}', 'PostController@show');
+Route::get('post/{post:slug}', 'PostController@show');
 
 // ================= PASSING DATA DARI REQUEST DAN CONTROLLER=================
 // data request dr URL
