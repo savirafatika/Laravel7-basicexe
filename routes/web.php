@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 // ========================= PAGINATION WORKFLOW ==============================
 Route::get('post', 'PostController@index');
+Route::get('post/create', 'PostController@create');
+Route::post('post/store', 'PostController@store');
 
 // ============================= ROUTE WILD ==================================
 Route::get('post/{post:slug}', 'PostController@show');

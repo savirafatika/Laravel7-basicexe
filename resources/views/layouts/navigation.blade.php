@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
+    <div class="container">
         <a class="navbar-brand" href="/">Laravel 7</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,6 +18,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link{{ request()->is('login') ? ' active' : '' }}" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{{ request()->is('post') ? ' active' : '' }}" href="/post">Post</a>
                 </li>
             </ul>
         </div>
