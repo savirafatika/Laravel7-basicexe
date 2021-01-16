@@ -13,7 +13,7 @@ class PostRequest extends FormRequest
      */
     public function authorize()
     {
-        // jika ingin memvalidasi data uh berada di dalam method rules dibawah aktifkan nilai return jadi "true"
+        // jika ingin memvalidasi data yg berada di dalam method rules dibawah aktifkan nilai return jadi "true"
         return true;
     }
 

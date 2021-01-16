@@ -13,6 +13,9 @@ Route::patch('post/{post:slug}/edit', 'PostController@update');
 // PUT = update data di seluruh fill pd database
 // PATCH = update data secara partial / sebagian fill
 
+// ============================ DELETE DATA ===================================
+Route::delete('post/{post:slug}/delete', 'PostController@destroy');
+
 // ============================= ROUTE WILD ==================================
 Route::get('post/{post:slug}', 'PostController@show');
 

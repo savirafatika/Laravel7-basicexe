@@ -82,6 +82,13 @@ class PostController extends Controller
         return redirect('post');
     }
 
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        session()->flash('success', 'The post was destroyed');
+        return redirect('post');
+    }
+
     // public function validateRequest()
     // {
     //     return request()->validate([
