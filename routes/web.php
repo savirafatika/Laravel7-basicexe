@@ -7,6 +7,12 @@ Route::get('post', 'PostController@index');
 Route::get('post/create', 'PostController@create');
 Route::post('post/store', 'PostController@store');
 
+// ============================ UPDATE DATA ===================================
+Route::get('post/{post:slug}/edit', 'PostController@edit');
+Route::patch('post/{post:slug}/edit', 'PostController@update');
+// PUT = update data di seluruh fill pd database
+// PATCH = update data secara partial / sebagian fill
+
 // ============================= ROUTE WILD ==================================
 Route::get('post/{post:slug}', 'PostController@show');
 
