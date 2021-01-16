@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -30,11 +31,11 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('post.create');
+        return view('post.create', ['post' => new Post()]);
     }
 
     // public function store(Request $request)
-    public function store()
+    public function store(PostRequest $request)
     {
         // $post = new Post;
         // $post->title = $request->title;
@@ -49,10 +50,8 @@ class PostController extends Controller
         // ]);
 
         // validate the field
-        $attr = request()->validate([
-            'title' => 'required|min:3|max:20',
-            'body' => 'required',
-        ]);
+        // $attr = $this->validateRequest();
+        $attr = $request->all();
 
         // $post = $request->all();
         // memasukkan semua request yg ada di form
@@ -74,15 +73,20 @@ class PostController extends Controller
         return view('post.edit', compact('post'));
     }
 
-    public function update(Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        $attr = request()->validate([
-            'title' => 'required|min:3|max:20',
-            'body' => 'required',
-        ]);
-
+        // $attr = $this->validateRequest();
+        $attr = $request->all();
         $post->update($attr);
         session()->flash('success', 'The post was updated');
         return redirect('post');
     }
+
+    // public function validateRequest()
+    // {
+    //     return request()->validate([
+    //         'title' => 'required|min:3|max:20',
+    //         'body' => 'required',
+    //     ]);
+    // }
 }
