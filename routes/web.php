@@ -19,6 +19,9 @@ Route::delete('post/{post:slug}/delete', 'PostController@destroy');
 // ============================= ROUTE WILD ==================================
 Route::get('post/{post:slug}', 'PostController@show');
 
+// ========================== FILTER BY CATEGORY ===============================
+Route::get('categories/{category:slug}', 'CategoryController@show');
+
 // ================= PASSING DATA DARI REQUEST DAN CONTROLLER=================
 // data request dr URL
 // Route::get('/', function () {
