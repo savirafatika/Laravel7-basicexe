@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\{Category, Post, Tag};
 use App\Http\Requests\PostRequest;
-use App\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -31,7 +31,11 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('post.create', ['post' => new Post()]);
+        return view('post.create', [
+            'post' => new Post(),
+            'categories' => Category::get(),
+            'tags' => Tag::get(),
+        ]);
     }
 
     // public function store(Request $request)
@@ -57,8 +61,11 @@ class PostController extends Controller
         // memasukkan semua request yg ada di form
         // Assign title to the slug
         $attr['slug'] = \Str::slug(request('title'));
+        $attr['category_id'] = request('category');
         // create new post
-        Post::create($attr);
+        $post = Post::create($attr);
+
+        $post->tags()->attach(request('tags'));
 
         // flash message
         // session()->flash('error', 'The post can not be created');
@@ -70,20 +77,27 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        return view('post.edit', compact('post'));
+        return view('post.edit', [
+            'post' => $post,
+            'categories' => Category::get(),
+            'tags' => Tag::get(),
+        ]);
     }
 
     public function update(PostRequest $request, Post $post)
     {
         // $attr = $this->validateRequest();
         $attr = $request->all();
+        $attr['category_id'] = request('category');
         $post->update($attr);
+        $post->tags()->sync(request('tags'));
         session()->flash('success', 'The post was updated');
         return redirect('post');
     }
 
     public function destroy(Post $post)
     {
+        $post->tags()->detach();
         $post->delete();
         session()->flash('success', 'The post was destroyed');
         return redirect('post');
