@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function show(Category $category)
     {
-        $posts = $category->posts()->paginate(5);
+        $posts = $category->posts()->latest()->paginate(5);
         return view('post.index', compact('posts', 'category'));
     }
 }

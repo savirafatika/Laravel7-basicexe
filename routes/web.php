@@ -22,6 +22,9 @@ Route::get('post/{post:slug}', 'PostController@show');
 // ========================== FILTER BY CATEGORY ===============================
 Route::get('categories/{category:slug}', 'CategoryController@show');
 
+// ============================= FILTER BY TAG ==================================
+Route::get('tags/{tag:slug}', 'TagController@show');
+
 // ================= PASSING DATA DARI REQUEST DAN CONTROLLER=================
 // data request dr URL
 // Route::get('/', function () {
