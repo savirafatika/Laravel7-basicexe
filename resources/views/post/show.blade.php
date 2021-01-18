@@ -14,6 +14,7 @@
     <hr>
     <p>{{ $post->body }}</p>
 
+    @auth
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-link text-danger btn-sm p-0" data-bs-toggle="modal"
         data-bs-target="#exampleModal">
@@ -47,5 +48,6 @@
             </div>
         </div>
     </div>
+    @endauth
 </div>
 @endsection
