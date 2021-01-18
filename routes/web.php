@@ -3,22 +3,22 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// ========================= PAGINATION WORKFLOW ==============================
 Route::get('post', 'PostController@index')->name('post.index');
-Route::get('post/create', 'PostController@create')->name('post.create');
-Route::post('post/store', 'PostController@store');
+Route::prefix('post')->middleware('auth')->group(function () {
+    // ========================= PAGINATION WORKFLOW ==============================
+    Route::get('create', 'PostController@create')->name('post.create');
+    Route::post('store', 'PostController@store');
+    // ============================ UPDATE DATA ===================================
+    Route::get('{post:slug}/edit', 'PostController@edit');
+    Route::patch('{post:slug}/edit', 'PostController@update');
+    // PUT = update data di seluruh fill pd database
+    // PATCH = update data secara partial / sebagian fill
 
-// ============================ UPDATE DATA ===================================
-Route::get('post/{post:slug}/edit', 'PostController@edit');
-Route::patch('post/{post:slug}/edit', 'PostController@update');
-// PUT = update data di seluruh fill pd database
-// PATCH = update data secara partial / sebagian fill
-
-// ============================ DELETE DATA ===================================
-Route::delete('post/{post:slug}/delete', 'PostController@destroy');
-
-// ============================= ROUTE WILD ==================================
-Route::get('post/{post:slug}', 'PostController@show');
+    // ============================ DELETE DATA ===================================
+    Route::delete('{post:slug}/delete', 'PostController@destroy');
+    // ============================= ROUTE WILD ==================================
+    Route::get('{post:slug}', 'PostController@show')->withoutMiddleware('auth');
+});
 
 // ========================== FILTER BY CATEGORY ===============================
 Route::get('categories/{category:slug}', 'CategoryController@show');
