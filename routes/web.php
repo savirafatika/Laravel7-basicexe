@@ -1,10 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // ========================= PAGINATION WORKFLOW ==============================
-Route::get('post', 'PostController@index');
-Route::get('post/create', 'PostController@create');
+Route::get('post', 'PostController@index')->name('post.index');
+Route::get('post/create', 'PostController@create')->name('post.create');
 Route::post('post/store', 'PostController@store');
 
 // ============================ UPDATE DATA ===================================
@@ -33,7 +34,7 @@ Route::get('tags/{tag:slug}', 'TagController@show');
 // });
 // data request dr controller
 // Route::get('/', 'HomesController@index');
-Route::get('/', 'HomeController');
+// Route::get('/', 'HomeController');
 
 // ============================ BLADE ========================================
 // Route::get('/', function () {
@@ -59,3 +60,7 @@ Route::get('cetak', function () {
     The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.";
     return view('cetak', ['body' => $postBody]);
 });
+
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
