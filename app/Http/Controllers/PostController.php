@@ -48,6 +48,28 @@ class PostController extends Controller
     // public function store(Request $request)
     public function store(PostRequest $request)
     {
+        $request->validate([
+            'thumbnail' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        $attr = $request->all();
+
+        $slug = \Str::slug(request('title'));
+        $attr['slug'] = $slug;
+
+        $thumbnail = request()->file('thumbnail') ? request()->file('thumbnail')->store("images/posts") : null;
+
+        $attr['category_id'] = request('category');
+        $attr['thumbnail'] = $thumbnail;
+
+        $post = auth()->user()->posts()->create($attr);
+        $post->tags()->attach(request('tags'));
+
+        session()->flash('success', 'The post was created');
+        return redirect('post');
+
+        // $thumbnailUrl = $thumbnail->storeAs("images/posts", "{$slug}.{$thumbnail->extension()}");
+        // flash message
+        // session()->flash('error', 'The post can not be created');
         // $post = new Post;
         // $post->title = $request->title;
         // $post->slug = \Str::slug($request->title);
@@ -62,22 +84,10 @@ class PostController extends Controller
 
         // validate the field
         // $attr = $this->validateRequest();
-        $attr = $request->all();
 
         // $post = $request->all();
         // memasukkan semua request yg ada di form
-        // Assign title to the slug
-        $attr['slug'] = \Str::slug(request('title'));
-        $attr['category_id'] = request('category');
-        // create new post
-        $post = auth()->user()->posts()->create($attr);
 
-        $post->tags()->attach(request('tags'));
-
-        // flash message
-        // session()->flash('error', 'The post can not be created');
-        session()->flash('success', 'The post was created');
-        return redirect('post');
         // return redirect()->to('post/create');
         // return back();
     }
@@ -93,18 +103,33 @@ class PostController extends Controller
 
     public function update(PostRequest $request, Post $post)
     {
-        // $attr = $this->validateRequest();
+        $request->validate([
+            'thumbnail' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
         $this->authorize('update', $post);
+        if (request()->file('thumbnail')) {
+            \Storage::delete($post->thumbnail);
+            $thumbnail = request()->file('thumbnail')->store("images/posts");
+        } else {
+            $thumbnail = $post->thumbnail;
+        }
+
+
         $attr = $request->all();
         $attr['category_id'] = request('category');
+        $attr['thumbnail'] = $thumbnail;
+
         $post->update($attr);
         $post->tags()->sync(request('tags'));
+
         session()->flash('success', 'The post was updated');
         return redirect('post');
     }
 
     public function destroy(Post $post)
     {
+        \Storage::delete($post->thumbnail);
         $this->authorize('delete', $post);
         $post->delete();
         session()->flash('success', 'The post was destroyed');

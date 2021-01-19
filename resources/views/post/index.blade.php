@@ -27,10 +27,17 @@
         @forelse ($posts as $post)
         <div class="col-md-4">
             <div class="card mb-4">
-                <div class="card-header">
-                    {{ $post->title }}
-                </div>
+
+                @if ($post->thumbnail)
+                <img style="height: 270px; object-fit: cover; object-position: center;" class="card-img-top"
+                    src="{{ $post->takeImage }}">
+                @endif
+
                 <div class="card-body">
+                    <div class="card-title">
+                        {{ $post->title }}
+                    </div>
+
                     <div>
                         {{ Str::limit($post->body, 100, '..') }}
                     </div>
