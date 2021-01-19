@@ -115,7 +115,6 @@ class PostController extends Controller
             $thumbnail = $post->thumbnail;
         }
 
-
         $attr = $request->all();
         $attr['category_id'] = request('category');
         $attr['thumbnail'] = $thumbnail;
@@ -129,10 +128,13 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        \Storage::delete($post->thumbnail);
         $this->authorize('delete', $post);
+
+        \Storage::delete($post->thumbnail);
+        $post->tags()->detach();
         $post->delete();
         session()->flash('success', 'The post was destroyed');
+        return redirect('post');
     }
 
     // public function validateRequest()
