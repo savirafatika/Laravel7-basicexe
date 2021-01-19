@@ -40,9 +40,9 @@
                 <div class="card-footer d-flex justify-content-between">
                     {{-- format("d F, Y") --}}
                     Published on {{ $post->created_at->diffForHumans() }}
-                    @auth
+                    @can('update', $post)
                     <a href="post/{{ $post->slug }}/edit" class="btn btn-sm btn-success">Edit</a>
-                    @endauth
+                    @endcan
                 </div>
             </div>
         </div>
