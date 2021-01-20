@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::get('search', 'SearchController@post')->name('search.posts');
 Route::get('post', 'PostController@index')->name('post.index');
 Route::prefix('post')->middleware('auth')->group(function () {
     // ========================= PAGINATION WORKFLOW ==============================

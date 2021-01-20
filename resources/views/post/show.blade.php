@@ -37,7 +37,7 @@
                     data-bs-target="#exampleModal">
                     Delete
                 </button>
-                <a href="post/{{ $post->slug }}/edit" class="btn btn-sm btn-success">Edit</a>
+                <a href="{{ $post->slug }}/edit" class="btn btn-sm btn-success">Edit</a>
             </div>
 
             <!-- Modal -->

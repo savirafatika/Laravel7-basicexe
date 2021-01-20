@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = ['title', 'slug', 'body', 'category_id', 'thumbnail'];
-    // protected $guarded = [];
-    // protected $table = 'post';
+    protected $with = ['author', 'category', 'tags'];
+
     public function scopeLatestFirst()
     {
         return $this->latest()->first();
