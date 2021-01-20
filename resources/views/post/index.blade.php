@@ -54,7 +54,7 @@
                 </h5>
 
                 <div class="text-secondary my-3">
-                    {{ Str::limit($post->body, 130, '..') }}
+                    {{ Str::limit($post->body, 200, '..') }}
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mt-2">

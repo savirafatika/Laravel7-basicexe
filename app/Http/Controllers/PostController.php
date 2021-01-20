@@ -21,7 +21,7 @@ class PostController extends Controller
         // $posts = Post::simplePaginate(4);
         // $posts = Post::paginate(10);
         return view('post.index', [
-            'posts' => Post::latest()->paginate(5),
+            'posts' => Post::with('author', 'tags', 'category')->latest()->paginate(5),
         ]);
     }
 
@@ -32,8 +32,8 @@ class PostController extends Controller
         // if (!$post) {
         //     abort(404);
         // }
-
-        return view('post.show', compact('post'));
+        $posts = Post::with('author', 'tags', 'category')->where('category_id', $post->category_id)->latest()->limit(6)->get();
+        return view('post.show', compact('post', 'posts'));
     }
 
     public function create()
