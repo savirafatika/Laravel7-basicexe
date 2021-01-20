@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="d-flex justify-content-between">
+    <div class="">
         <div>
             @isset ($category)
             <h4>Category: {{ $category->name }}</h4>
@@ -17,39 +17,60 @@
             @endif
             <hr>
         </div>
-        <div>
+        {{-- <div>
             @if (Auth::check())
             <a href="{{ route('post.create') }}" class="btn btn-primary">New Post</a>
-            @endif
-        </div>
-    </div>
-    <div class="row">
+        @endif
+    </div> --}}
+</div>
+
+<div class="row">
+    <div class="col-md-7">
         @forelse ($posts as $post)
-        <div class="col-md-4">
-            <div class="card mb-4">
-
-                @if ($post->thumbnail)
-                <img style="height: 270px; object-fit: cover; object-position: center;" class="card-img-top"
+        <div class="card mb-4">
+            @if ($post->thumbnail)
+            <a href="{{ route('post.show', $post->slug) }}">
+                <img style="height: 400px; object-fit: cover; object-position: center;" class="card-img-top"
                     src="{{ $post->takeImage }}">
-                @endif
+            </a>
+            @endif
+            <div class="card-body">
+                <div>
+                    <a href="{{ route('categories.show', $post->category->slug) }}" class="text-secondary">
+                        <small>{{ $post->category->name }} - </small>
+                    </a>
 
-                <div class="card-body">
-                    <div class="card-title">
-                        {{ $post->title }}
-                    </div>
-
-                    <div>
-                        {{ Str::limit($post->body, 100, '..') }}
-                    </div>
-
-                    <a href="/post/{{ $post->slug }}">Read More</a>
+                    @foreach ($post->tags as $tag)
+                    <a href="{{ route('tags.show', $tag->slug) }}" class="text-secondary">
+                        <small>{{ $tag->name }}</small>
+                    </a>
+                    @endforeach
                 </div>
-                <div class="card-footer d-flex justify-content-between">
-                    {{-- format("d F, Y") --}}
-                    Published on {{ $post->created_at->diffForHumans() }}
-                    @can('update', $post)
-                    <a href="post/{{ $post->slug }}/edit" class="btn btn-sm btn-success">Edit</a>
-                    @endcan
+
+                <h5>
+                    <a href="{{ route('post.show', $post->slug) }}" class="card-title text-dark">
+                        {{ $post->title }}
+                    </a>
+                </h5>
+
+                <div class="text-secondary my-3">
+                    {{ Str::limit($post->body, 130, '..') }}
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <div class="media my-3 align-items-center">
+                        <img width="40" class="rounded-circle mr-3" src="{{ $post->author->gravatar() }}" alt="">
+                        <div class="media-body">
+                            <div>
+                                {{ $post->author->name }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-secondary">
+                        <small>
+                            Published on {{ $post->created_at->diffForHumans() }}
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,10 +82,9 @@
         </div>
         @endforelse
     </div>
-    <div class="d-flex justify-content-center">
-        <div>
-            {{ $posts->links() }}
-        </div>
-    </div>
+</div>
+
+{{ $posts->links() }}
+
 </div>
 @stop

@@ -16,15 +16,15 @@ Route::prefix('post')->middleware('auth')->group(function () {
 
     // ============================ DELETE DATA ===================================
     Route::delete('{post:slug}/delete', 'PostController@destroy');
-    // ============================= ROUTE WILD ==================================
-    Route::get('{post:slug}', 'PostController@show')->withoutMiddleware('auth');
 });
+// ============================= ROUTE WILD ==================================
+Route::get('{post:slug}', 'PostController@show')->name('post.show');
 
 // ========================== FILTER BY CATEGORY ===============================
-Route::get('categories/{category:slug}', 'CategoryController@show');
+Route::get('categories/{category:slug}', 'CategoryController@show')->name('categories.show');
 
 // ============================= FILTER BY TAG ==================================
-Route::get('tags/{tag:slug}', 'TagController@show');
+Route::get('tags/{tag:slug}', 'TagController@show')->name('tags.show');
 
 // ================= PASSING DATA DARI REQUEST DAN CONTROLLER=================
 // data request dr URL
